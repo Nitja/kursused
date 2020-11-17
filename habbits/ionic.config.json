@@ -1,0 +1,7 @@
+{
+  "name": "habbits",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
