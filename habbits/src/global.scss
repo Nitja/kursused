@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,31 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.nameInput {
+  position: relative;
+  top: -20px;
+}
+
+.repeatText {
+  border-bottom: none !important;
+}
+
+.repeatInput {
+  width: 20px !important;
+  border-bottom: none !important;
+  position: absolute;
+  text-align: center;
+  bottom: 97px;
+  left: 73px;
+}
+
+.timeframeInput {
+  width: 20px !important; 
+  border-bottom: none !important;
+  position: absolute;
+  text-align: center;
+  bottom: 97px;
+  left: 160px;
+}
+
