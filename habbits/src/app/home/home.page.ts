@@ -19,7 +19,7 @@ export class HomePage {
   onEditHabit(id) {
     this.habitId = id;
     this.onAddHabit();
-    this.habitId = null;
+   // this.habitId = null;
   }
 
   async onAddHabit() {
@@ -34,7 +34,7 @@ export class HomePage {
       currentHabit = {
         name: this.habits[this.habitId].name,
         repeatTimes: this.habits[this.habitId].repeatTimes,
-        timeframe: this.habits[this.habitId].tineFrame,
+        timeframe: this.habits[this.habitId].timeframe,
       };
     }
 
@@ -47,7 +47,7 @@ export class HomePage {
           type: "text",
           cssClass: "nameInput",
           placeholder: "Name of habit",
-          value: currentHabit.name
+          value: currentHabit.name,
         },
         {
           name: "repeatText",
@@ -62,12 +62,14 @@ export class HomePage {
           name: "repeatTimes",
           type: "number",
           cssClass: "repeatInput",
+          value: currentHabit.repeatTimes,
           //maxLength
         },
         {
           name: "timeframe",
           type: "number",
           cssClass: "timeframeInput",
+          value: currentHabit.timeframe,
           //maxLength
         },
       ],
@@ -76,7 +78,9 @@ export class HomePage {
           text: "Cancel",
           role: "cancel",
           cssClass: "secondary",
-          handler: () => {},
+          handler: () => {
+            this.habitId = null;
+          },
         },
         {
           text: "Ok",
@@ -89,7 +93,15 @@ export class HomePage {
               datesDone: [],
             };
             this.habits = JSON.parse(localStorage.getItem("habits")) || [];
-            this.habits.push(newHabit);
+            
+            console.log(this.habitId);
+            
+            if (this.habitId == null) {
+              this.habits.push(newHabit);
+            } else {
+              this.habits[this.habitId] = newHabit;
+              this.habitId = null;
+            }
             localStorage.setItem("habits", JSON.stringify(this.habits));
           },
         },
