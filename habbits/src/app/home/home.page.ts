@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { AlertController } from "@ionic/angular";
+import { title } from "process";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -9,6 +11,7 @@ import { AlertController } from "@ionic/angular";
 export class HomePage {
   habits = [];
   habitId;
+  showRemoveButton = false;
 
   constructor(public alertController: AlertController) {}
 
@@ -16,21 +19,34 @@ export class HomePage {
     this.habits = JSON.parse(localStorage.getItem("habits")) || [];
   }
 
+  pressEvent(e) {
+    
+  }
+
+  onRemoveHabit() {
+    this.habits.splice(this.habitId, 1);
+    console.log(this.habitId);
+    localStorage.setItem("habits", JSON.stringify(this.habits));
+    this.habitId = null;
+  }
+
   onEditHabit(id) {
     this.habitId = id;
     this.onAddHabit();
-   // this.habitId = null;
   }
 
   async onAddHabit() {
     let currentHabit;
+    let title;
     if (this.habitId == null) {
+      title = "Insert new habit";
       currentHabit = {
         name: "",
         repeatTimes: "",
         timeframe: "",
       };
     } else {
+      title = "Change habit";
       currentHabit = {
         name: this.habits[this.habitId].name,
         repeatTimes: this.habits[this.habitId].repeatTimes,
@@ -40,12 +56,12 @@ export class HomePage {
 
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
-      header: "Insert new habit",
+      header: title,
       inputs: [
         {
           name: "name",
           type: "text",
-          cssClass: "nameInput",
+          cssClass: "nameInput alertInput",
           placeholder: "Name of habit",
           value: currentHabit.name,
         },
@@ -61,14 +77,14 @@ export class HomePage {
         {
           name: "repeatTimes",
           type: "number",
-          cssClass: "repeatInput",
+          cssClass: "repeatInput alertInput",
           value: currentHabit.repeatTimes,
           //maxLength
         },
         {
           name: "timeframe",
           type: "number",
-          cssClass: "timeframeInput",
+          cssClass: "timeframeInput alertInput",
           value: currentHabit.timeframe,
           //maxLength
         },
@@ -84,6 +100,7 @@ export class HomePage {
         },
         {
           text: "Ok",
+          cssClass: "confirm disabled",
           handler: (alertData) => {
             let newHabit = {
               name: alertData.name,
@@ -92,10 +109,8 @@ export class HomePage {
               done: false,
               datesDone: [],
             };
-            this.habits = JSON.parse(localStorage.getItem("habits")) || [];
-            
-            console.log(this.habitId);
-            
+            // this.habits = JSON.parse(localStorage.getItem("habits")) || [];
+
             if (this.habitId == null) {
               this.habits.push(newHabit);
             } else {
@@ -109,5 +124,74 @@ export class HomePage {
     });
 
     await alert.present();
+
+    const confirmBtn = document.querySelector(".confirm") as HTMLButtonElement;
+
+    if (this.habitId == null) {
+      confirmBtn.disabled = true;
+      confirmBtn.classList.add("disabled");
+    } else {
+      confirmBtn.disabled = false;
+      confirmBtn.classList.remove("disabled");
+    }
+
+    const code$ = new Subject();
+    const codeInput = document.getElementsByClassName(
+      "alertInput"
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    const alertInputs = Array.from(codeInput);
+    alertInputs.forEach((element) => {
+      element.addEventListener("keyup", () => code$.next(alertInputs));
+    });
+    code$.asObservable().subscribe((alertInputs: HTMLInputElement[]) => {
+      let buttonDisabled = false;
+      confirmBtn.classList.remove("disabled");
+
+      alertInputs.forEach((element) => {
+        if (element.value == "") {
+          buttonDisabled = true;
+          confirmBtn.classList.add("disabled");
+        }
+      });
+      confirmBtn.disabled = buttonDisabled;
+    });
+
+    // const confirmBtn = document.querySelector('.confirm') as HTMLButtonElement;
+    // confirmBtn.disabled = true;
+
+    // let codeOneDisabled;
+    // let codeTwoDisabled;
+    //   let codeThreeDisabled;
+    // if (this.habitId == null) {
+    //   codeOneDisabled = true;
+    //   codeTwoDisabled = true;
+    //   codeThreeDisabled = true;
+    // } else {
+    //   confirmBtn.disabled = false;
+    // }
+
+    // const code1$ = new Subject();
+    // const codeInput1 = document.getElementById('code1') as HTMLInputElement;
+    // codeInput1.addEventListener('keyup', () => code1$.next(codeInput1.value));
+    // code1$.asObservable().subscribe(code => {
+    //   codeOneDisabled = (code == '');
+    //   confirmBtn.disabled = (codeOneDisabled || codeTwoDisabled || codeThreeDisabled);
+    // });
+
+    // const code2$ = new Subject();
+    // const codeInput2 = document.getElementById('code2') as HTMLInputElement;
+    // codeInput2.addEventListener('keyup', () => code2$.next(codeInput2.value));
+    // code2$.asObservable().subscribe(code => {
+    //   codeTwoDisabled = (code == '');
+    //   confirmBtn.disabled = (codeOneDisabled || codeTwoDisabled || codeThreeDisabled);
+    // });
+
+    // const code3$ = new Subject();
+    // const codeInput3 = document.getElementById('code3') as HTMLInputElement;
+    // codeInput3.addEventListener('keyup', () => code3$.next(codeInput3.value));
+    // code3$.asObservable().subscribe(code => {
+    //   codeThreeDisabled = (code == '');
+    //   confirmBtn.disabled = (codeOneDisabled || codeTwoDisabled || codeThreeDisabled);
+    // });
   }
 }
