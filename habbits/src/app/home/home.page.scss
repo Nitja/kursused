@@ -25,3 +25,22 @@
 #container a {
   text-decoration: none;
 }
+ion-col div {
+  font-size: 13px;
+  text-align: center;
+}
+
+.first-row {
+  background-color: rgb(240, 240, 240);
+}
+
+ion-row {
+  padding: 7px 10px;
+}
+
+ion-col ion-icon {
+  display: block;
+  margin: 0 auto;
+  //align-content: center;
+}
+

@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { title } from "process";
 import { Subject } from "rxjs";
+import { PreviousDatePipe } from "./previous-date.pipe";
 
 @Component({
   selector: "app-home",
@@ -12,15 +14,43 @@ export class HomePage {
   habits = [];
   habitId;
   showRemoveButton = false;
+  date;
 
   constructor(public alertController: AlertController) {}
 
   ionViewDidEnter() {
+    this.date = new Date();
     this.habits = JSON.parse(localStorage.getItem("habits")) || [];
+    this.checkLastDatesDone();
   }
 
-  pressEvent(e) {
-    
+  checkLastDatesDone() {
+    this.habits.forEach((habit) => {
+      habit.datesDone.forEach((dateDone) => {
+        const datePipe = new DatePipe('en-US');
+       if( datePipe.transform(dateDone, "shortdate") == datePipe.transform(this.date, "shortdate"))
+     {
+       habit.
+     }
+      });
+    });
+  }
+
+  pressEvent(e) {}
+
+  onHabitDone(daysAgo: number, id: number) {
+    let dateDone = new Date();
+
+    dateDone.setDate(dateDone.getDate() - daysAgo);
+    this.habits[id].datesDone.push(dateDone);
+    localStorage.setItem("habits", JSON.stringify(this.habits));
+  }
+
+  onHabitUndone(daysAgo: number, id: number) {
+    // let dateDone = new Date();
+    // dateDone.setDate(dateDone.getDate() - daysAgo);
+    // this.habits[id].datesDone.push(dateDone);
+    // localStorage.setItem("habits", JSON.stringify(this.habits));
   }
 
   onRemoveHabit() {
