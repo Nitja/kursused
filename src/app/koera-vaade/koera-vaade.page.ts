@@ -9,7 +9,18 @@ export class KoeraVaadePage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
 
+  dog;
+  id;
+  activatedRoute: any;
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.id = params.id;
+    });
+
+    let dogs = localStorage.getItem("dogs");
+
+    this.dog = dogs[this.id];
+  }
 }

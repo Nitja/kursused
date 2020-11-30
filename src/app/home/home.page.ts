@@ -40,5 +40,11 @@ export class HomePage {
     },
   ];
 
+  ionViewWillEnter() {
+
+    localStorage.setItem("dogs", this.dogs.toString());
+    
+    }
+
   constructor() {}
 }

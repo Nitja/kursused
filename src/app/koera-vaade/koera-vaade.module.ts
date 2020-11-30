@@ -1,20 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { KoeraVaadePageRoutingModule } from './koera-vaade-routing.module';
+import { KoeraVaadePageRoutingModule } from "./koera-vaade-routing.module";
 
-import { KoeraVaadePage } from './koera-vaade.page';
+import { KoeraVaadePage } from "./koera-vaade.page";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    KoeraVaadePageRoutingModule
+    KoeraVaadePageRoutingModule,
   ],
-  declarations: [KoeraVaadePage]
+  declarations: [KoeraVaadePage],
 })
-export class KoeraVaadePageModule {}
+export class KoeraVaadePageModule {
+ 
+}
