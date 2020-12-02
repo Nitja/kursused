@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { title } from "process";
@@ -15,42 +15,79 @@ export class HomePage {
   habitId;
   showRemoveButton = false;
   date;
+  previousDatePipe = new PreviousDatePipe();
+  datePipe = new DatePipe("en-US");
 
   constructor(public alertController: AlertController) {}
 
   ionViewDidEnter() {
     this.date = new Date();
     this.habits = JSON.parse(localStorage.getItem("habits")) || [];
-    this.checkLastDatesDone();
+    // this.checkLastDatesDone();
   }
 
-  checkLastDatesDone() {
-    this.habits.forEach((habit) => {
-      habit.datesDone.forEach((dateDone) => {
-        const datePipe = new DatePipe('en-US');
-       if( datePipe.transform(dateDone, "shortdate") == datePipe.transform(this.date, "shortdate"))
-     {
-       habit.
-     }
-      });
+  // checkLastDatesDone() {
+  //     this.habits.forEach((habit) => {
+  //       habit.datesDone.forEach((dateDone) => {
+  //         const datePipe = new DatePipe('en-US');
+  //        if( datePipe.transform(dateDone, "shortdate") == datePipe.transform(this.date, "shortdate"))
+  //      {
+  //        //habit.
+  //      }
+  //       });
+  //     });
+  //   }
+
+  checkLastDatesDone(index) {
+    let habitShow = this.habits[index].show;
+
+    this.habits[index].datesDone.forEach((dateDone) => {
+      if (
+        this.datePipe.transform(dateDone, "shortdate") ==
+        this.datePipe.transform(this.date, "shortdate")
+      ) {
+        habitShow[0] = true;
+      } else if (
+        this.datePipe.transform(dateDone, "shortdate") ==
+        this.datePipe.transform(
+          this.previousDatePipe.transform(this.date, 1),
+          "shortdate"
+        )
+      ) {
+        habitShow[1] = true;
+      }
     });
   }
 
   pressEvent(e) {}
 
-  onHabitDone(daysAgo: number, id: number) {
-    let dateDone = new Date();
+  onHabitCheck(daysAgo: number, id: number, isDone: boolean) {
+    let habit = this.habits[id];
+    if (isDone) {
+      habit.show[daysAgo] = false;
+      for (
+        let i = habit.datesDone.length - 1;
+        i >= habit.datesDone.length - 5;
+        i--
+      ) {
+        if (
+          this.datePipe.transform(habit.datesDone[i], "shortdate") ==
+          this.datePipe.transform(
+            this.previousDatePipe.transform(this.date, daysAgo),
+            "shortdate"
+          )
+        ) {
+          habit.datesDone.splice(i, 1);
+        }
+      }
+    } else {
+      let dateDone = new Date();
+      dateDone.setDate(dateDone.getDate() - daysAgo);
+      habit.datesDone.push(dateDone);
+      this.checkLastDatesDone(id);
+    }
 
-    dateDone.setDate(dateDone.getDate() - daysAgo);
-    this.habits[id].datesDone.push(dateDone);
     localStorage.setItem("habits", JSON.stringify(this.habits));
-  }
-
-  onHabitUndone(daysAgo: number, id: number) {
-    // let dateDone = new Date();
-    // dateDone.setDate(dateDone.getDate() - daysAgo);
-    // this.habits[id].datesDone.push(dateDone);
-    // localStorage.setItem("habits", JSON.stringify(this.habits));
   }
 
   onRemoveHabit() {
@@ -142,6 +179,9 @@ export class HomePage {
             // this.habits = JSON.parse(localStorage.getItem("habits")) || [];
 
             if (this.habitId == null) {
+              newHabit["show"] = Array(5).fill(false);
+              //newHabit["show"] = [false, false, false, false, false];
+              // newHabit["show"] = Array.from({ length: 5 }).map((el) => false);
               this.habits.push(newHabit);
             } else {
               this.habits[this.habitId] = newHabit;
