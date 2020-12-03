@@ -1,6 +1,8 @@
 import { DatePipe } from "@angular/common";
 import { Component } from "@angular/core";
+import { async } from '@angular/core/testing';
 import { AlertController } from "@ionic/angular";
+import { read } from 'fs';
 import { title } from "process";
 import { Subject } from "rxjs";
 import { PreviousDatePipe } from "./previous-date.pipe";
@@ -23,38 +25,22 @@ export class HomePage {
   ionViewDidEnter() {
     this.date = new Date();
     this.habits = JSON.parse(localStorage.getItem("habits")) || [];
-    // this.checkLastDatesDone();
   }
-
-  // checkLastDatesDone() {
-  //     this.habits.forEach((habit) => {
-  //       habit.datesDone.forEach((dateDone) => {
-  //         const datePipe = new DatePipe('en-US');
-  //        if( datePipe.transform(dateDone, "shortdate") == datePipe.transform(this.date, "shortdate"))
-  //      {
-  //        //habit.
-  //      }
-  //       });
-  //     });
-  //   }
 
   checkLastDatesDone(index) {
     let habitShow = this.habits[index].show;
 
     this.habits[index].datesDone.forEach((dateDone) => {
-      if (
-        this.datePipe.transform(dateDone, "shortdate") ==
-        this.datePipe.transform(this.date, "shortdate")
-      ) {
-        habitShow[0] = true;
-      } else if (
-        this.datePipe.transform(dateDone, "shortdate") ==
-        this.datePipe.transform(
-          this.previousDatePipe.transform(this.date, 1),
-          "shortdate"
-        )
-      ) {
-        habitShow[1] = true;
+      for (let i = 0; i < 5; i++) {
+        if (
+          this.datePipe.transform(dateDone, "shortDate") ==
+          this.datePipe.transform(
+            this.previousDatePipe.transform(this.date, i),
+            "shortDate"
+          )
+        ) {
+          habitShow[4 - i] = true;
+        }
       }
     });
   }
@@ -63,24 +49,27 @@ export class HomePage {
 
   onHabitCheck(daysAgo: number, id: number, isDone: boolean) {
     let habit = this.habits[id];
+
     if (isDone) {
       habit.show[daysAgo] = false;
+      daysAgo = 4 - daysAgo;
       for (
         let i = habit.datesDone.length - 1;
         i >= habit.datesDone.length - 5;
         i--
       ) {
         if (
-          this.datePipe.transform(habit.datesDone[i], "shortdate") ==
+          this.datePipe.transform(habit.datesDone[i], "shortDate") ==
           this.datePipe.transform(
             this.previousDatePipe.transform(this.date, daysAgo),
-            "shortdate"
+            "shortDate"
           )
         ) {
           habit.datesDone.splice(i, 1);
         }
       }
     } else {
+      daysAgo = 4 - daysAgo;
       let dateDone = new Date();
       dateDone.setDate(dateDone.getDate() - daysAgo);
       habit.datesDone.push(dateDone);
@@ -157,6 +146,13 @@ export class HomePage {
         },
       ],
       buttons: [
+        {
+          text: "Color",
+          cssClass: "secondary",
+          handler: () => {
+            this.changeColorAlert();
+          },
+        },
         {
           text: "Cancel",
           role: "cancel",
@@ -263,5 +259,38 @@ export class HomePage {
     //   codeThreeDisabled = (code == '');
     //   confirmBtn.disabled = (codeOneDisabled || codeTwoDisabled || codeThreeDisabled);
     // });
+  }
+
+  async changeColorAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Radio',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          label: 'Radio 1',
+          value: 'value1',
+          checked: true
+        },
+        {
+          name: 'radio2',
+          type: 'radio',
+          label: 'Radio 2',
+          value: 'value2',
+          cssClass: 'radio2'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
