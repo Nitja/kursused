@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  notes;
+  notes: any[];
   weekdays = [
     "Sunday",
     "Monday",
@@ -21,7 +21,8 @@ export class HomePage {
   constructor() {}
 
   ionViewDidEnter(): void {
-    this.notes = JSON.parse(localStorage.getItem("notes"));
+  
+    this.notes = JSON.parse(localStorage.getItem("notes")) || [];
 
     this.getShownDate();
     this.sortItems();
