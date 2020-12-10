@@ -1,5 +1,5 @@
-import { getLocaleDayNames } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { DatabaseService } from "../database/database.service";
 
 @Component({
   selector: "app-home",
@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  notes: any[];
+  notes;
   weekdays = [
     "Sunday",
     "Monday",
@@ -18,14 +18,23 @@ export class HomePage {
     "Saturday",
   ];
 
-  constructor() {}
+  constructor(private dbService: DatabaseService) {}
 
   ionViewDidEnter(): void {
-  
     this.notes = JSON.parse(localStorage.getItem("notes")) || [];
 
     this.getShownDate();
     this.sortItems();
+  }
+
+  doRefresh(event) {
+
+    //console.log(Response)
+    this.dbService.getNotes().subscribe((response) => {
+      this.notes = response;
+      localStorage.setItem("notes", JSON.stringify(this.notes));
+      event.target.complete();
+    });
   }
 
   getShownDate() {
@@ -59,7 +68,7 @@ export class HomePage {
           let minutes;
           if (noteDate.getMinutes() < 10) {
             minutes = "0" + noteDate.getMinutes();
-          } else if ((noteDate.getMinutes() == 0)) {
+          } else if (noteDate.getMinutes() == 0) {
             minutes = "00";
           } else {
             minutes = noteDate.getMinutes();
