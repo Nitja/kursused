@@ -8,6 +8,7 @@ import { AddPageRoutingModule } from "./add-routing.module";
 
 import { AddPage } from "./add.page";
 import { Autosize } from "../shared/autosize.directive";
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { Autosize } from "../shared/autosize.directive";
     ReactiveFormsModule,
     IonicModule,
     AddPageRoutingModule,
+    HttpClientModule,
   ],
   declarations: [AddPage, Autosize],
 })

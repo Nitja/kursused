@@ -1,0 +1,18 @@
+{
+  "rulesFile": "database.rules.json",
+  "hosting": {
+    "site": "ksenianotes",
+    "public": "www",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

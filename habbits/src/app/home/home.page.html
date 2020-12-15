@@ -13,16 +13,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-list>
-    <ion-item
-      (press)="pressEvent($event)"
-      (click)="onEditHabit(id)"
-      *ngFor="let habit of habits; let id = index"
-    >
-      <ion-label> {{ habit.name }} </ion-label>
-    </ion-item>
-  </ion-list> -->
-
+{{ counter }}
   <ion-grid class="ion-no-padding">
     <ion-row class="first-row">
       <ion-col size="6"> </ion-col>
@@ -32,12 +23,12 @@
       </ion-col>
     </ion-row>
     <ion-row
-      (touchstart)="pressEvent($event)"
-      (touchend)="pressEvent($event)"
+      (touchstart)="pressEvent('start', id)"
+      (touchend)="pressEvent('end', id)"
       *ngFor="let habit of habits; let id = index"
     >
       <ion-col size="6">
-        <ion-label (click)="onEditHabit(id)"> {{ habit.name }} </ion-label>
+        <ion-label [routerLink]="['/detail-view', id]"> {{ habit.name }} </ion-label>
       </ion-col>
       <ng-container *ngIf="habit" (onCreate)="checkLastDatesDone(id)">
         <ion-col *ngFor="let isDone of habit.show; let daysAgo = index" (click)="onHabitCheck(daysAgo, id, isDone)">
