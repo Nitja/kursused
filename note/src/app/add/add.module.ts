@@ -20,5 +20,6 @@ import { HttpClientModule } from '@angular/common/http'
     HttpClientModule,
   ],
   declarations: [AddPage, Autosize],
+  providers: [Autosize]
 })
 export class AddPageModule {}

@@ -1,0 +1,20 @@
+{
+  "Mon": "Mon",
+  "Tue": "Tue",
+  "Wed": "Wed",
+  "Thu": "Thu",
+  "Fri": "Fri",
+  "Sat": "Sat",
+  "Sun": "Sun",
+
+  "home": {
+    "title": "Habits",
+    "insertTitle": "Insert new habit",
+    "changeTitle": "Change habit",
+    "habitName": "Name of the habit"
+  },
+
+  "detail": {
+    "title": "Detailed view"
+  }
+}

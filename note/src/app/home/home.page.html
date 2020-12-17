@@ -7,24 +7,24 @@
 
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content>
-      <ion-list>
-        <ion-list-header> Siia tuleb muudetamise kuu </ion-list-header>
-
-        <ion-item [routerLink]="['/add', note.id]" *ngFor="let note of notes">
-          <ion-avatar slot="start" *ngIf="note.picture">
-            <img src="./avatar-poe.png" />
-          </ion-avatar>
-          <ion-label>
-            <p class="date">{{ note.dateShown }}</p>
-            <h2 class="header">{{ note.header }}</h2>
-            <p class="text">{{ note.text }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-refresher-content>
+    <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
-  
+
+  <ion-list>
+    <ion-list-header> Siia tuleb muudetamise kuu </ion-list-header>
+
+    <ion-item [routerLink]="['/add', note.id]" *ngFor="let note of notes">
+      <ion-avatar slot="start" *ngIf="note.picture">
+        <img src="./avatar-poe.png" />
+      </ion-avatar>
+      <ion-label>
+        <p class="date">{{ note.dateShown }}</p>
+        <h2 class="header">{{ note.header }}</h2>
+        <p class="text">{{ note.text }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>

@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { PreviousDatePipe } from './previous-date.pipe';
 import { OnCreateDirective } from './on-create.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { OnCreateDirective } from './on-create.directive';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    TranslateModule
   ],
   declarations: [HomePage, PreviousDatePipe, OnCreateDirective]
 })

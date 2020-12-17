@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Habits </ion-title>
+    <ion-title> {{ 'home.title' | translate }} </ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="showRemoveButton" (click)="onRemoveHabit()">
         <ion-icon name="trash-outline"></ion-icon>
@@ -13,12 +13,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-{{ counter }}
+  {{ counter }}
   <ion-grid class="ion-no-padding">
     <ion-row class="first-row">
       <ion-col size="6"> </ion-col>
       <ion-col *ngFor="let dayBefore of [4,3,2,1,0]">
-        <div>{{ date | previousDate:dayBefore | date: 'E' }}</div>
+        <div>{{ date | previousDate:dayBefore | date: 'E' | translate }}</div>
         <div>{{ date | previousDate:dayBefore | date: 'dd' }}</div>
       </ion-col>
     </ion-row>
@@ -28,15 +28,28 @@
       *ngFor="let habit of habits; let id = index"
     >
       <ion-col size="6">
-        <ion-label [routerLink]="['/detail-view', id]"> {{ habit.name }} </ion-label>
+        <ion-label [routerLink]="['/detail-view', id]">
+          {{ habit.name }}
+        </ion-label>
       </ion-col>
       <ng-container *ngIf="habit" (onCreate)="checkLastDatesDone(id)">
-        <ion-col *ngFor="let isDone of habit.show; let daysAgo = index" (click)="onHabitCheck(daysAgo, id, isDone)">
+        <ion-col
+          *ngFor="let isDone of habit.show; let daysAgo = index"
+          (click)="onHabitCheck(daysAgo, id, isDone)"
+        >
           <ion-icon *ngIf="!isDone" name="close-sharp"></ion-icon>
           <ion-icon *ngIf="isDone" name="checkmark-sharp"></ion-icon>
         </ion-col>
       </ng-container>
-
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!-- <ion-img [src]="image"></ion-img> -->
+    <label (click)="useLanguage('en')"> Eng </label>
+    <label (click)="useLanguage('ee')"> Est </label>
+    <label (click)="useLanguage('ru')"> Rus </label>
+  </ion-toolbar>
+</ion-footer>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { DatabaseService } from '../database/database.service';
+import { DatabaseService } from "../database/database.service";
+import { Autosize } from "../shared/autosize.directive";
 
 @Component({
   selector: "app-add",
@@ -16,11 +17,17 @@ export class AddPage implements OnInit {
   editNote: { header: string; text: string; date: Date };
   editNoteForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private dbService: DatabaseService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dbService: DatabaseService,
+    private autosize: Autosize
+  ) {}
 
   ngOnInit() {
     this.getParams();
     this.initFrom();
+    console.log ("ma sain siia");
+    this.autosize.adjust();
   }
 
   getParams() {

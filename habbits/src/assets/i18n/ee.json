@@ -1,0 +1,20 @@
+{
+  "Mon": "E",
+  "Tue": "T",
+  "Wed": "K",
+  "Thu": "N",
+  "Fri": "R",
+  "Sat": "L",
+  "Sun": "P",
+
+  "home": {
+    "title": "Harjumused",
+    "insertTitle": "Sisesta uus harjumus",
+    "changeTitle": "Muuda harjumuse",
+    "habitName": "Harjumuse nimi"
+  },
+
+  "detail": {
+    "title": "Detaliseeritud vaade"
+  }
+}
