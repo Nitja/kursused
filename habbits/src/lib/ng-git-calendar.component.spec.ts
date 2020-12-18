@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NgGitCalendarComponent } from './ng-git-calendar.component';
+import { NgGitCalendarComponent } from "./ng-git-calendar.component";
 
-describe('NgGitCalendarComponent', () => {
+describe("NgGitCalendarComponent", () => {
   let component: NgGitCalendarComponent;
   let fixture: ComponentFixture<NgGitCalendarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgGitCalendarComponent ]
-    })
-    .compileComponents();
+      declarations: [NgGitCalendarComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('NgGitCalendarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

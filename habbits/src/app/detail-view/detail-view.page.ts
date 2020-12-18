@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-detail-view",
@@ -9,7 +10,10 @@ import { ActivatedRoute } from "@angular/router";
 export class DetailViewPage implements OnInit {
   habit;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private translate: TranslateService) {
+
+    translate.setDefaultLang(localStorage.getItem("habitsLanguare") || "en");
+  }
 
   ngOnInit() {
     let habits = JSON.parse(localStorage.getItem("habits"));

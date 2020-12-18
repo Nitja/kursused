@@ -24,11 +24,12 @@ export class HomePage {
     public alertController: AlertController,
     private translate: TranslateService
   ) {
-    translate.setDefaultLang("en");
+    translate.setDefaultLang(localStorage.getItem("habitsLanguare") || "en");
   }
 
   useLanguage(language: string) {
     this.translate.use(language);
+    localStorage.setItem("habitsLanguare", language);
   }
 
   ionViewDidEnter() {

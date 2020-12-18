@@ -1,9 +1,20 @@
 {
+  "Mon": "ПН",
+  "Tue": "ВТ",
+  "Wed": "СР",
+  "Thu": "ЧТ",
+  "Fri": "ПТ",
+  "Sat": "СБ",
+  "Sun": "ВС",
+
   "home": {
-      "title": "Privqchki"
+    "title": "Привычки",
+    "insertTitle": "Добавьте новую привычку",
+    "changeTitle": "Измените привычку",
+    "habitName": "Название привычки"
   },
 
   "detail": {
-    "title": "Detalnqi vid"
-}
+    "title": "Подробнее"
+  }
 }

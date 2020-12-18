@@ -1,37 +1,19 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
 ion-col div {
   font-size: 13px;
   text-align: center;
 }
 
-.first-row {
-  background-color: rgb(240, 240, 240);
+ion-content {
+  --ion-background-color: rgb(240, 240, 240);
+}
+
+.rowForHabit {
+  background-color: white;
+  border-color: rgb(240, 240, 240);
+  border-style: solid;
+  border-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
 }
 
 ion-row {

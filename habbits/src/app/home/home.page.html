@@ -13,9 +13,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  {{ counter }}
   <ion-grid class="ion-no-padding">
-    <ion-row class="first-row">
+    <ion-row>
       <ion-col size="6"> </ion-col>
       <ion-col *ngFor="let dayBefore of [4,3,2,1,0]">
         <div>{{ date | previousDate:dayBefore | date: 'E' | translate }}</div>
@@ -26,6 +25,7 @@
       (touchstart)="pressEvent('start', id)"
       (touchend)="pressEvent('end', id)"
       *ngFor="let habit of habits; let id = index"
+      class="rowForHabit"
     >
       <ion-col size="6">
         <ion-label [routerLink]="['/detail-view', id]">
@@ -47,9 +47,11 @@
 
 <ion-footer>
   <ion-toolbar>
-    <!-- <ion-img [src]="image"></ion-img> -->
-    <label (click)="useLanguage('en')"> Eng </label>
-    <label (click)="useLanguage('ee')"> Est </label>
-    <label (click)="useLanguage('ru')"> Rus </label>
+    <!-- <label (click)="useLanguage('en')"> <img src="../../assets/img/en.jpg"> </label>
+    <label (click)="useLanguage('ee')"> <img src="../../assets/img/ee.jpg"> </label>
+    <label (click)="useLanguage('ru')"> <img src="../../assets/img/ru.jpg"> </label> -->
+    <img (click)="useLanguage('en')" height="40 px" width="40 px" src="../../assets/img/en.jpg">
+    <img (click)="useLanguage('ee')" height="40 px" width="40 px" src="../../assets/img/ee.jpg">
+    <img (click)="useLanguage('ru')" height="40 px" width="40 px" src="../../assets/img/ru.jpg">
   </ion-toolbar>
 </ion-footer>
