@@ -1,7 +1,5 @@
-
-<div class="corpo" (window:resize)="onResize($event)"  >
-
-  <div class="graph myContainer" >
+<div class="corpo" (window:resize)="onResize($event)">
+  <div class="graph myContainer">
     <ul class="months">
       <li>Jan</li>
       <li>Feb</li>
@@ -17,15 +15,13 @@
       <li>Dec</li>
     </ul>
 
-    <ul  class="squares" id="squares">
-      <li data-placement="top"  *ngFor="let dia of dias"  [style.background-color]="getColor(dia)"></li>
+    <ul class="squares" id="squares">
+      <li
+        data-placement="top"
+        *ngFor="let dia of dias"
+        [style.background-color]="getColor(dia)"
+      ></li>
       <!-- <li style="background-color: chocolate;"></li> -->
-
-
     </ul>
   </div>
-
-
-
-  </div>
-
+</div>
